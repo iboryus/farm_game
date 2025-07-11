@@ -1,20 +1,27 @@
-import 'package:flutter/material.dart';
+import 'package:flame/game.dart';
+import 'package:flame/components.dart';
+import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class FarmGame extends FlameGame {
+  late SpriteComponent ground;
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+  Future<void> onLoad() async {
+    final groundImage = await images.load('zemin.png');
+
+    ground = SpriteComponent(
+      sprite: Sprite(groundImage),
+      size: size,
+      position: Vector2.zero(),
     );
+
+    add(ground);
   }
+}
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  final game = FarmGame();
+
+  runApp(GameWidget(game: game));
 }
