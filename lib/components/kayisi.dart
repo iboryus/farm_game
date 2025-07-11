@@ -12,10 +12,12 @@ class Kayisi extends SpriteComponent with TapCallbacks {
 
   Kayisi({
     required this.type,
+    required Vector2 position,
     required this.onTapped,
-    super.position,
-    required super.size,
-  });
+  }) {
+    this.position = position;
+    size = Vector2.all(64);
+  }
 
   @override
   Future<void> onLoad() async {
@@ -32,10 +34,10 @@ class Kayisi extends SpriteComponent with TapCallbacks {
     onTapped.call(this);
   }
 
-  void hareketEttir(Vector2 targetPosition) {
+  void hareketEttir(Vector2 hedef, {required VoidCallback onCompleteCallBack}) {
     add(
       MoveToEffect(
-        targetPosition,
+        hedef,
         EffectController(duration: 0.5, curve: Curves.easeOut),
         onComplete: () {
           log('kayısı hedefe ulaştı');
